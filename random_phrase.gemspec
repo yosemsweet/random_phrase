@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = RandomPhrase::VERSION
   s.authors     = ["Yosem Sweet"]
   s.email       = ["yosem.sweet@suite101.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/yosemsweet/random_phrase"
   s.summary     = %q{Generate a simple random phrase}
   s.description = %q{This gem provides random phrase functionality and extends Array with a random .pick}
 
@@ -19,6 +19,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   # specify any dependencies here; for example:
-  # s.add_development_dependency "rspec"
+  s.add_development_dependency "rspec"
   # s.add_runtime_dependency "rest-client"
 end

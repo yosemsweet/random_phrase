@@ -1,4 +1,6 @@
 require "random_phrase/version"
+require "random_phrase/dictionary"
+require "random_phrase/core_ext/array"
 
 module RandomPhrase
 
@@ -9,8 +11,5 @@ module RandomPhrase
 		end
 		phrase.join(" ")
 	end
-	
-	
-		
 
 end

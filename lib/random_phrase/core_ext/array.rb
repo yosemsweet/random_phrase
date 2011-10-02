@@ -1,5 +1,5 @@
 class Array
-  def pick
-    at Kernel.rand(size)
+  def group_by_length
+		groups = { }
   end
 end

@@ -12,10 +12,11 @@ module RandomPhrase
 			@@dictionary ||= RandomPhrase::Dictionary.new
 		end
 
-		def phrase(word_count = 1)
+		def phrase(word_count = 1, *args)
+			options = args.extract_options!
 			phrase = []
 			word_count.times do 
-				phrase << dictionary.words.sample
+				phrase << dictionary.words(options).sample
 			end
 			phrase.join(" ")
 		end

@@ -1,6 +1,24 @@
 require "spec_helper"
 
 describe RandomPhrase do
+	
+	context "::dictionary" do
+		it "should have a dictionary accessor attribute" do
+			RandomPhrase.should respond_to(:dictionary=)
+			RandomPhrase.should respond_to(:dictionary)
+		end
+		
+		it "should only return words from its dictionary" do
+			dictionary = RandomPhrase::Dictionary.new(Proc.new {["a", "b", "c"]})
+			RandomPhrase.dictionary= dictionary
+			RandomPhrase.phrase(10).split.each { |word| dictionary.words.should include(word) }
+		end
+		
+		after(:all) do
+			RandomPhrase.dictionary= nil
+		end
+	end
+
 	context "::phrase" do
 		it "should respond to phrase an optional word count" do
 			RandomPhrase.should respond_to(:phrase)
@@ -24,18 +42,14 @@ describe RandomPhrase do
 		it "should return different phrases on successive calls" do
 			RandomPhrase.phrase.should_not == RandomPhrase.phrase
 		end
-	end
-	
-	context "::dictionary" do
-		it "should have a dictionary accessor attribute" do
-			RandomPhrase.should respond_to(:dictionary=)
-			RandomPhrase.should respond_to(:dictionary)
-		end
 		
-		it "should only return words from its dictionary" do
-			dictionary = RandomPhrase::Dictionary.new(Proc.new {["a", "b", "c"]})
-			RandomPhrase.dictionary= dictionary
-			RandomPhrase.phrase(10).split.each { |word| dictionary.words.should include(word) }
+		context "with options" do
+			context ":length =>" do
+				it "should only return words of the specified length" do
+					RandomPhrase.dictionary= RandomPhrase::Dictionary.new(Proc.new {["aaa", "bbbb", "cc", "ddd", "ee"]})
+					RandomPhrase.phrase(2, :length => 3).split.each {|word| word.length.should == 3}
+				end
+			end
 		end
 	end
 end

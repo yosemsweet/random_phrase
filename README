@@ -1,0 +1,44 @@
+random_phrase
+    by Yosem Sweet
+    http://github.com/yosemsweet/random_phrase
+
+== DESCRIPTION:
+
+random_phrase generates a random phrase from phrase list. The code is heavily based off [randexp]https://github.com/benburkert/randexp but allows you to load your word list via custom loaders instead of only supporting your users dictionary.
+
+== REQUIREMENTS:
+ 
+* ActiveSupport 3 (you'll get this with bundle install)
+ 
+== INSTALL:
+ 
+  $ gem install random_phrase
+
+== USAGE:
+
+Random_phrase works by initializing a dictionary for the RandomPhrase class and then calling RandomPhrase.phrase with options.
+
+  #can run in config file
+  RandomPhrase.dictionary= RandomPhrase::Dictionary.new(Proc.new {["my", "test", "word", "list", "is", "super"]})
+  
+  #in source
+  RandomPhrase.phrase #returns one of: my test word list is super
+  
+You can pass the length of the phrase desired
+  a_two_word_phrase = RandomPhrase.phrase(2)
+  
+You can also pass the target letter count for words
+  a_two_word_phrase_of_four_letter_words = RandomPhrase.phrase(2, :length => 4)
+  
+You can also ask for phrase by regexp
+ a_pattern_matched_phrase = RandomPhrase(/\wy [a-zA-Z]+er\s\w{4}/) #will return "my super [word|test|list]"
+  
+== Valid Regexp's
+
+I haven't tested with all regexps. Your mileage may vary here.
+
+= Dictionary
+By default the dictionary loads a text file in config/words
+The words file should have a new word on each line.
+
+You can also initialize your dictionary via a proc that returns an array of strings.

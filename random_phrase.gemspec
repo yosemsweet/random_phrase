@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email       = ["yosem.sweet@suite101.com"]
   s.homepage    = "https://github.com/yosemsweet/random_phrase"
   s.summary     = %q{Generate a simple random phrase}
-  s.description = %q{This gem provides random phrase functionality and extends Array with a random .pick}
+  s.description = %q{This gem provides the ability to generate a random phrase from a customizable word list via word length and regexp matching.}
 
   s.rubyforge_project = "random_phrase"
 

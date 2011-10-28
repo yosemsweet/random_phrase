@@ -45,6 +45,15 @@ describe RandomPhrase::Dictionary do
 					dictionary.words(:length => 4).length.should == 1
 				end
 			end
+			
+			context "passing in pattern" do
+				it "should return only words matching the pattern" do
+					dictionary = RandomPhrase::Dictionary.new(Proc.new {["a", "a"*2, "a"*3, "a"*4, "b"]})
+					dictionary.words(:pattern => /b/).each { |w| w.should =~ /b/}
+					dictionary.words(:pattern => /a/).each { |w| w.should =~ /a/}
+					dictionary.words(:pattern => /a{3}/).each { |w| w.should =~ /a{3}/}
+				end
+			end
 		end
 	end
 end

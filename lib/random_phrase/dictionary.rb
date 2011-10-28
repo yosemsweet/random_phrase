@@ -23,9 +23,13 @@ class RandomPhrase::Dictionary
 		options = args.extract_options!
 	
 		@dictionary ||= loader.call().group_by {|word| word.length}
-		result = @dictionary.values
+		result = @dictionary.values.flatten
 		if options.key?(:length)
 			result = @dictionary.fetch(options[:length], [])
+		end
+		
+		if options.key?(:pattern)
+			result = result.select { |w| w =~ Regexp.try_convert(options[:pattern]) }
 		end
 		
 		result.flatten

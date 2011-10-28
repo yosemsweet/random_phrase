@@ -11,7 +11,7 @@ describe RandomPhrase do
 		it "should only return words from its dictionary" do
 			dictionary = RandomPhrase::Dictionary.new(Proc.new {["a", "b", "c"]})
 			RandomPhrase.dictionary= dictionary
-			RandomPhrase.phrase(10).split.each { |word| dictionary.words.should include(word) }
+			RandomPhrase.phrase().split.each { |word| dictionary.words.should include(word) }
 		end
 		
 		after(:all) do
@@ -48,6 +48,37 @@ describe RandomPhrase do
 				it "should only return words of the specified length" do
 					RandomPhrase.dictionary= RandomPhrase::Dictionary.new(Proc.new {["aaa", "bbbb", "cc", "ddd", "ee"]})
 					RandomPhrase.phrase(2, :length => 3).split.each {|word| word.length.should == 3}
+				end
+				after(:all) do
+					RandomPhrase.dictionary= nil
+				end
+			end
+			
+			context ":pattern =>" do
+				before(:all) do
+					RandomPhrase.dictionary= nil
+				end
+				
+				context "single word patterns" do
+					it "should return a phrase matching the pattern" do
+						RandomPhrase.dictionary= RandomPhrase::Dictionary.new(Proc.new {["aed", "bed", "cat", "a", "foeder"]})
+						pattern = /[a-zA-Z]+ed/
+						phrase = RandomPhrase.phrase(pattern)
+						pattern.match(phrase).should_not be_nil
+					end
+				end
+				
+				context "multi-word patterns" do
+					it "should return a phrase matching the pattern" do
+						RandomPhrase.dictionary= RandomPhrase::Dictionary.new(Proc.new {["aed", "bed", "cat", "a", "foeder"]})
+						pattern = /\w+ [a-zA-Z]+ed/
+						phrase = RandomPhrase.phrase(pattern)
+						pattern.match(phrase).should_not be_nil
+					end
+				end
+				
+				after(:all) do
+					RandomPhrase.dictionary= nil
 				end
 			end
 		end
